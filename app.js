@@ -55,7 +55,8 @@ app.use((error, req, res, next) => {
     });
 });
 
-mongoose.connect('mongodb+srv://Terza:owrDJV7SOQV54zp7@forumcluster-8orzd.mongodb.net/socnetdb?retryWrites=true&w=majority')
+const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.MONGO_CLUSTER}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(result => {
         const server = app.listen(8080);
         const io = require('./socket').init(server);
